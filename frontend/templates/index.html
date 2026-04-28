@@ -1,0 +1,247 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LeetCode AI Documentation Generator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'style.css' %}" />
+</head>
+<body>
+  <!-- Background grid -->
+  <div class="bg-grid"></div>
+  <div class="bg-glow"></div>
+
+  <div class="page-wrapper">
+
+    <!-- HEADER -->
+    <header class="site-header">
+      <div class="header-inner">
+        <div class="logo-mark">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <rect width="32" height="32" rx="8" fill="url(#grad1)"/>
+            <path d="M8 22L14 10L20 18L23 14L27 22H8Z" fill="white" opacity="0.9"/>
+            <defs>
+              <linearGradient id="grad1" x1="0" y1="0" x2="32" y2="32">
+                <stop offset="0%" stop-color="#f97316"/>
+                <stop offset="100%" stop-color="#ef4444"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <div class="header-text">
+          <h1 class="site-title">LeetCode AI Documentation Generator</h1>
+          <p class="site-subtitle">Paste your solution → Get professional documentation instantly</p>
+        </div>
+        <div class="header-badge">
+          <span class="badge-dot"></span>
+          <span>Powered by Gemini 2.5</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+      <div class="two-col">
+
+        <!-- LEFT: INPUT PANEL -->
+        <section class="panel input-panel">
+          <div class="panel-header">
+            <span class="panel-icon">⌨</span>
+            <span class="panel-title">Input</span>
+          </div>
+
+          <div class="form-body">
+
+            <!-- Problem URL -->
+            <div class="field-group">
+              <label class="field-label" for="problem-url">
+                Problem URL
+                <span class="optional-tag">optional</span>
+              </label>
+              <div class="input-wrapper">
+                <svg class="input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+                  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+                </svg>
+                <input
+                  type="url"
+                  id="problem-url"
+                  class="field-input"
+                  placeholder="https://leetcode.com/problems/two-sum/"
+                />
+              </div>
+            </div>
+
+            <!-- Language Selector -->
+            <div class="field-group">
+              <label class="field-label" for="language">Language</label>
+              <div class="select-wrapper">
+                <select id="language" class="field-select">
+                  <option value="auto">✦ Auto Detect</option>
+                  <option value="cpp">C++</option>
+                  <option value="python">Python</option>
+                  <option value="java">Java</option>
+                  <option value="javascript">JavaScript</option>
+                </select>
+                <svg class="select-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <polyline points="6 9 12 15 18 9"/>
+                </svg>
+              </div>
+            </div>
+
+            <!-- Code Area -->
+            <div class="field-group code-field-group">
+              <div class="code-label-row">
+                <label class="field-label" for="code-input">Solution Code</label>
+                <div class="editor-dots">
+                  <span class="dot dot-red"></span>
+                  <span class="dot dot-yellow"></span>
+                  <span class="dot dot-green"></span>
+                </div>
+              </div>
+              <div class="code-editor-frame">
+                <div class="line-numbers" id="line-numbers">1</div>
+                <textarea
+                  id="code-input"
+                  class="code-textarea"
+                  placeholder="// Paste your LeetCode solution here...
+// Example:
+class Solution {
+public:
+    vector&lt;int&gt; twoSum(vector&lt;int&gt;&amp; nums, int target) {
+        unordered_map&lt;int, int&gt; mp;
+        for (int i = 0; i &lt; nums.size(); i++) {
+            if (mp.count(target - nums[i]))
+                return {mp[target - nums[i]], i};
+            mp[nums[i]] = i;
+        }
+        return {};
+    }
+};"
+                  spellcheck="false"
+                  autocomplete="off"
+                  autocorrect="off"
+                  autocapitalize="off"
+                ></textarea>
+              </div>
+              <div class="code-stats" id="code-stats">0 lines · 0 characters</div>
+            </div>
+
+            <!-- Generate Button -->
+            <button id="generate-btn" class="generate-btn" type="button">
+              <span class="btn-text">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                </svg>
+                Generate Documentation
+              </span>
+              <span class="btn-spinner" aria-hidden="true">
+                <span class="spinner-ring"></span>
+                Analyzing with AI...
+              </span>
+            </button>
+
+            <!-- Error Message -->
+            <div id="error-box" class="error-box" role="alert" hidden>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+              </svg>
+              <span id="error-text"></span>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- RIGHT: OUTPUT PANEL -->
+        <section class="panel output-panel" id="output-panel">
+
+          <!-- Empty state -->
+          <div class="empty-state" id="empty-state">
+            <div class="empty-icon">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                <polyline points="14 2 14 8 20 8"/>
+                <line x1="16" y1="13" x2="8" y2="13"/>
+                <line x1="16" y1="17" x2="8" y2="17"/>
+                <polyline points="10 9 9 9 8 9"/>
+              </svg>
+            </div>
+            <p class="empty-title">Documentation will appear here</p>
+            <p class="empty-sub">Paste your code and click Generate to get started</p>
+          </div>
+
+          <!-- Result content -->
+          <div id="result-content" class="result-content" hidden>
+            <div class="result-header">
+              <div class="result-meta">
+                <span class="panel-icon">📄</span>
+                <span class="panel-title">Generated Documentation</span>
+              </div>
+              <div class="result-actions">
+                <button id="copy-btn" class="action-btn copy-btn" type="button" title="Copy to clipboard">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                  </svg>
+                  Copy
+                </button>
+                <button id="download-btn" class="action-btn download-btn" type="button" title="Download as Markdown">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="7 10 12 15 17 10"/>
+                    <line x1="12" y1="15" x2="12" y2="3"/>
+                  </svg>
+                  .md
+                </button>
+              </div>
+            </div>
+
+            <!-- Doc block -->
+            <div class="doc-block">
+              <div class="doc-header-row">
+                <span class="doc-lang-tag" id="doc-lang-tag"></span>
+                <div class="doc-badges">
+                  <span class="difficulty-badge" id="difficulty-badge"></span>
+                </div>
+              </div>
+              <pre class="doc-pre"><code id="doc-output-text"></code></pre>
+            </div>
+
+            <!-- Stats row -->
+            <div class="stats-row" id="stats-row">
+              <div class="stat-pill">
+                <span class="stat-label">Time</span>
+                <span class="stat-value" id="stat-time"></span>
+              </div>
+              <div class="stat-pill">
+                <span class="stat-label">Space</span>
+                <span class="stat-value" id="stat-space"></span>
+              </div>
+              <div class="stat-pill">
+                <span class="stat-label">Problem</span>
+                <span class="stat-value" id="stat-problem"></span>
+              </div>
+            </div>
+          </div>
+
+        </section>
+
+      </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+      <span>LeetCode AI Docs Generator</span>
+      <span class="footer-sep">·</span>
+      <span>Built with Django + Gemini 2.5</span>
+    </footer>
+
+  </div>
+
+  <script src="{% static 'app.js' %}"></script>
+</body>
+</html>
