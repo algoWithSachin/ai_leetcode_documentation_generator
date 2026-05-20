@@ -78,7 +78,10 @@ leetcode_ai/
 │
 ├── leetcode_ai/                ← Django project package
 │   ├── __init__.py
-│   ├── settings.py
+│   ├── settings/
+│       ├── dev.py
+│       ├── prod.py
+│       ├── base.py
 │   ├── urls.py
 │   └── wsgi.py
 │
@@ -148,11 +151,3 @@ Returns API health and whether Gemini is configured.
 - **Ctrl+Enter** shortcut — generate without mouse
 
 ---
-
-## 🛠️ Production Deployment
-
-1. Set `DEBUG=False` in `.env`
-2. Set a strong `DJANGO_SECRET_KEY`
-3. Configure `ALLOWED_HOSTS` in `settings.py`
-4. Use `gunicorn` + `nginx`
-5. Run `collectstatic` and serve `/staticfiles/` via nginx
