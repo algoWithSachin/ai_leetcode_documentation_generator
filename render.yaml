@@ -8,6 +8,7 @@ services:
       pip install uv
       uv sync
       python manage.py collectstatic --noinput
+      uv run python manage.py migrate
       
 
     startCommand: uv run gunicorn leetcode_ai.wsgi:application
