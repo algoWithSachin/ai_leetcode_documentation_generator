@@ -8,4 +8,4 @@ SECRET_KEY = os.environ["DJANGO_SECRET_KEY"]
 
 DEBUG = False
 
-ALLOWED_HOSTS = ["leetcode-ai-197h.onrender.com"]
+ALLOWED_HOSTS = ["*"]
