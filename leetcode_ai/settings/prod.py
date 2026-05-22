@@ -8,4 +8,4 @@ SECRET_KEY = os.environ["DJANGO_SECRET_KEY"]
 
 DEBUG = False
 
-ALLOWED_HOSTS = ["3.27.104.86"]
+ALLOWED_HOSTS = []

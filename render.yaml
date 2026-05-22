@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: leetcode-ai
+    env: python
+    plan: free
+
+    buildCommand: |
+      pip install uv
+      uv sync
+      python manage.py collectstatic --noinput
+      
+
+    startCommand: uv run gunicorn leetcode_ai.wsgi:application
+
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12
